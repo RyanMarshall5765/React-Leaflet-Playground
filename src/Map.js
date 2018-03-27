@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Map, TileLayer, GeoJSON } from 'react-leaflet'
 import './App.css';
-import {worldMap} from './places.js'
+import {testJson} from './places'
+
+let json = testJson();
 
 class MapOne extends Component {
     constructor() {
@@ -22,7 +24,7 @@ class MapOne extends Component {
                 />
 
                 <GeoJSON
-                    data={testJson()}
+                    data={json}
                     onEachFeature={onEachFeature}
                 />
             </Map>
@@ -30,9 +32,7 @@ class MapOne extends Component {
     }
 }
 export default MapOne;
-const testJson = () => {
-    return worldMap
-}
+
 
 const onEachFeature = (feature, layer) => {
     if (feature.properties) {
