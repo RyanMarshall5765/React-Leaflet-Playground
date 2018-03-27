@@ -3,7 +3,7 @@ import { Map, TileLayer, GeoJSON } from 'react-leaflet'
 import './App.css';
 import {testJson} from './places'
 
-let json = testJson();
+let geojson = testJson();
 
 class MapOne extends Component {
     constructor() {
@@ -24,7 +24,7 @@ class MapOne extends Component {
                 />
 
                 <GeoJSON
-                    data={json}
+                    data={geojson}
                     onEachFeature={onEachFeature}
                 />
             </Map>
@@ -33,19 +33,10 @@ class MapOne extends Component {
 }
 export default MapOne;
 
-
 const onEachFeature = (feature, layer) => {
-    if (feature.properties) {
-        let PopupText = [];
-        PopupText.push("<b>Name: </b>" + feature.properties['name-it']);
-        PopupText.push("<b><br/>Commune: </b>" + feature.properties.comune);
-        PopupText.push("<b><br/>Province: </b>" + feature.properties.province);
-        layer.bindPopup("<p>" + PopupText.join("") + "</p>");
+    const popUpContent = [];
+    for (const prop in feature.properties){
+        popUpContent.push(prop + ': ' + feature.properties[prop])
     }
+    layer.bindPopup(popUpContent.join('<br />'))
 }
-
-// '$' not defined call to parse geojson
-// $.getJSON("./places.geojson",  
-//  function(data) {
-//     const geojson = <GeoJSON data = {data} onEachFeature = {onEachFeature} />
-//     });
