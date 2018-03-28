@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Map, TileLayer, GeoJSON } from 'react-leaflet'
-import './App.css';
-import { testJson } from './places'
 import L from 'leaflet'
+//import GeoJsonCluster from 'react-leaflet-geojson-cluster'
+import { testJson } from './places'
+import './App.css';
 
 let geojson = testJson();
 
@@ -49,12 +50,12 @@ const onEachFeature = (feature, layer) => {
 
 
 const catholicCross = L.icon({
-    iconUrl: require('leaflet/dist/images/GenericCross.svg'),
+    iconUrl: 'images/GenericCross.svg',
     iconSize: [38, 95], 
 });
 
 const russianOrthodoxIcon = L.icon({
-    iconUrl: require('leaflet/dist/images/RussianOrthodox.svg'),
+    iconUrl:'images/RussianOrthodox.svg',
     iconSize: [38, 95], 
 });
 
