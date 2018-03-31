@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { Map, TileLayer, GeoJSON } from 'react-leaflet'
+import MarkerClusterGroup from 'react-leaflet-markercluster';
 import L from 'leaflet'
-//import GeoJsonCluster from 'react-leaflet-geojson-cluster'
-import { testJson } from './places'
+import { testJson } from './data/places.js'
 import './App.css';
 
+const markers = new L.MarkerClusterGroup();
 let geojson = testJson();
+
 
 class MapOne extends Component {
     constructor() {
@@ -32,6 +34,7 @@ class MapOne extends Component {
                     onEachFeature={onEachFeature}
                     pointToLayer={pointToLayer}
                 />
+
             </Map>
         );
     }
@@ -51,19 +54,19 @@ const onEachFeature = (feature, layer) => {
 
 const catholicCross = L.icon({
     iconUrl: 'images/GenericCross.svg',
-    iconSize: [38, 95], 
+    iconSize: [38, 95],
 });
 
 const russianOrthodoxIcon = L.icon({
-    iconUrl:'images/RussianOrthodox.svg',
-    iconSize: [38, 95], 
+    iconUrl: 'images/RussianOrthodox.svg',
+    iconSize: [38, 95],
 });
 
 const pointToLayer = (feature, latlng) => {
-    if(feature.properties['place-details-order'] === 'Basilian'){
-    return L.marker(latlng, {icon:russianOrthodoxIcon}); 
+    if (feature.properties['place-details-order'] === 'Basilian') {
+        return markers.addLayer(L.marker(latlng, { icon: russianOrthodoxIcon }));
     }
-    else{
-    return L.marker(latlng, {icon:catholicCross}); 
+    else {
+        return markers.addLayer(L.marker(latlng, { icon: catholicCross }));
     }
- }
+}
