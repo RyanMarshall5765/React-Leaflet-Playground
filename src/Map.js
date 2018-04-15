@@ -3,11 +3,12 @@ import { Map, TileLayer, GeoJSON } from 'react-leaflet'
 import MarkerClusterGroup from 'react-leaflet-markercluster';
 import L from 'leaflet'
 import { testJson } from './data/places.js'
+import './MarkerCluster.css';
+import './MarkerCluster.Default.css';
 import './App.css';
 
 const markers = new L.MarkerClusterGroup();
 let geojson = testJson();
-
 
 class MapOne extends Component {
     constructor() {
@@ -52,21 +53,21 @@ const onEachFeature = (feature, layer) => {
 }
 
 
-const catholicCross = L.icon({
-    iconUrl: 'images/GenericCross.svg',
+const simpleCross = L.icon({
+    iconUrl: 'images/simple_cross_black.svg',
     iconSize: [38, 95],
 });
 
-const russianOrthodoxIcon = L.icon({
-    iconUrl: 'images/RussianOrthodox.svg',
+const orthodoxCross = L.icon({
+    iconUrl: 'images/orthodox_cross_black.svg',
     iconSize: [38, 95],
 });
 
 const pointToLayer = (feature, latlng) => {
     if (feature.properties['place-details-order'] === 'Basilian') {
-        return markers.addLayer(L.marker(latlng, { icon: russianOrthodoxIcon }));
+        return markers.addLayer(L.marker(latlng, { icon: orthodoxCross }));
     }
     else {
-        return markers.addLayer(L.marker(latlng, { icon: catholicCross }));
+        return markers.addLayer(L.marker(latlng, { icon: simpleCross }));
     }
 }
