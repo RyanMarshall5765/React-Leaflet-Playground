@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { Map, TileLayer, GeoJSON } from 'react-leaflet'
 import MarkerClusterGroup from 'react-leaflet-markercluster';
 import L from 'leaflet'
-import { testJson } from './data/places.js'
-import './MarkerCluster.css';
-import './MarkerCluster.Default.css';
-import './App.css';
+import { testJson } from '../data/places.js'
+import '../node_fix/MarkerCluster.css';
+import '../node_fix/MarkerCluster.Default.css';
+import '../containers/App.css';
 
 const markers = new L.MarkerClusterGroup();
 let geojson = testJson();
@@ -52,9 +52,15 @@ const onEachFeature = (feature, layer) => {
     layer.bindPopup(popUpContent.join('<br />'))
 }
 
+    
 
-const simpleCross = L.icon({
+const simpleCrossBlack = L.icon({
     iconUrl: 'images/simple_cross_black.svg',
+    iconSize: [38, 95],
+});
+
+const simpleCrossBlue = L.icon({
+    iconUrl: 'images/simple_cross_blue.svg',
     iconSize: [38, 95],
 });
 
@@ -67,7 +73,10 @@ const pointToLayer = (feature, latlng) => {
     if (feature.properties['place-details-order'] === 'Basilian') {
         return markers.addLayer(L.marker(latlng, { icon: orthodoxCross }));
     }
-    else {
-        return markers.addLayer(L.marker(latlng, { icon: simpleCross }));
+    else if (feature.properties['place-details-order'] === 'Augustinian Canons') {
+        return markers.addLayer(L.marker(latlng, { icon: simpleCrossBlue }));
+    }
+    else{
+        return markers.addLayer(L.marker(latlng, { icon: simpleCrossBlack }));
     }
 }
