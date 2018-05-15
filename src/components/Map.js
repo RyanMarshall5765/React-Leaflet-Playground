@@ -1,24 +1,48 @@
 import React, { Component } from 'react';
 import { Map, TileLayer, GeoJSON } from 'react-leaflet'
-import MarkerClusterGroup from 'react-leaflet-markercluster';
 import L from 'leaflet'
-import { testJson } from '../data/places.js'
-import '../node_fix/MarkerCluster.css';
-import '../node_fix/MarkerCluster.Default.css';
+import { testJson} from '../data/places.js'
 import '../containers/App.css';
 
-const markers = new L.MarkerClusterGroup();
-let geojson = testJson();
 
+
+let geojson = testJson();
 class MapOne extends Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
+        this.onEachFeature = this.onEachFeature.bind(this)
+        this.pointToLayer = this.pointToLayer.bind(this)
         this.state = {
             center: [37.83, 14.33]
         }
     }
+        onEachFeature = (feature, layer) => {
+            const popUpContent = [];
+            for (const prop in feature.properties) {
+                if (feature.properties[prop] != null) {
+                    popUpContent.push('<h3>' + prop+ " : " +'</h3>'+ feature.properties[prop] )
+                }
+            }
+            layer.bindPopup(popUpContent.join())
+        } 
+
+
+        pointToLayer = (feature, latlng) => {
+            if (feature.properties['place-details-order'] === 'Basilian') {
+                return L.marker(latlng, { icon: orthodoxCross });
+            }
+            else if (feature.properties['place-details-order'] === 'Augustinian Canons') {
+                return L.marker(latlng, { icon: simpleCrossBlue });
+            }
+            else{
+                return L.marker(latlng, { icon: simpleCrossBlack });
+            }
+        }
+    
+
     render() {
         return (
+            <div>
             <Map
                 center={this.state.center}
                 zoom={8}
@@ -29,30 +53,25 @@ class MapOne extends Component {
                     maxZoom={18}
 
                 />
-
+               
                 <GeoJSON
                     data={geojson}
-                    onEachFeature={onEachFeature}
-                    pointToLayer={pointToLayer}
+                    onEachFeature={this.onEachFeature}
+                    pointToLayer={this.pointToLayer}
                 />
 
+                {/* <MarkerClusterGroup markers={markers}
+                                    wrapperOptions={{enableDefaultStyle: true}}
+                                    ref={(cluster) => console.log('cluster',cluster.leafletElement.toGeoJSON())}
+                /> */}
+
             </Map>
+            </div>
         );
     }
 }
 export default MapOne;
 
-const onEachFeature = (feature, layer) => {
-    const popUpContent = [];
-    for (const prop in feature.properties) {
-        if (feature.properties[prop] != null) {
-            popUpContent.push(prop + ': ' + feature.properties[prop])
-        }
-    }
-    layer.bindPopup(popUpContent.join('<br />'))
-}
-
-    
 
 const simpleCrossBlack = L.icon({
     iconUrl: 'images/simple_cross_black.svg',
@@ -69,14 +88,4 @@ const orthodoxCross = L.icon({
     iconSize: [38, 95],
 });
 
-const pointToLayer = (feature, latlng) => {
-    if (feature.properties['place-details-order'] === 'Basilian') {
-        return markers.addLayer(L.marker(latlng, { icon: orthodoxCross }));
-    }
-    else if (feature.properties['place-details-order'] === 'Augustinian Canons') {
-        return markers.addLayer(L.marker(latlng, { icon: simpleCrossBlue }));
-    }
-    else{
-        return markers.addLayer(L.marker(latlng, { icon: simpleCrossBlack }));
-    }
-}
+

@@ -7,7 +7,7 @@ h1, h2, p {
   text-align: center;
 }
 .leaflet-container {
-  height: 400px;
-  width: 70%;
+  height: 2000px;
+  width: 2000px;
   margin: 0 auto;
 }
