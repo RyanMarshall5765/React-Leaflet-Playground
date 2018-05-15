@@ -7,6 +7,7 @@ import '../containers/App.css';
 
 
 let geojson = testJson();
+
 class MapOne extends Component {
     constructor(props) {
         super(props)
@@ -20,22 +21,22 @@ class MapOne extends Component {
             const popUpContent = [];
             for (const prop in feature.properties) {
                 if (feature.properties[prop] != null) {
-                    popUpContent.push('<h3>' + prop+ " : " +'</h3>'+ feature.properties[prop] )
+                    popUpContent.push('<h3>' + prop +  ' : ' + '</h3>' + feature.properties[prop] )
                 }
             }
             layer.bindPopup(popUpContent.join())
         } 
 
 
-        pointToLayer = (feature, latlng) => {
-            if (feature.properties['place-details-order'] === 'Basilian') {
-                return L.marker(latlng, { icon: orthodoxCross });
-            }
-            else if (feature.properties['place-details-order'] === 'Augustinian Canons') {
-                return L.marker(latlng, { icon: simpleCrossBlue });
-            }
-            else{
-                return L.marker(latlng, { icon: simpleCrossBlack });
+
+        pointToLayer = (feature,latlng) => {
+            switch(feature.properties['place-details-order']) {
+                case 'Basilian':
+                    return L.marker(latlng, { icon: orthodoxCross });
+                case 'Augustinian Canons':
+                    return L.marker(latlng, { icon: simpleCrossBlue });
+                default:
+                    return L.marker(latlng, { icon: simpleCrossBlack });
             }
         }
     
@@ -59,11 +60,6 @@ class MapOne extends Component {
                     onEachFeature={this.onEachFeature}
                     pointToLayer={this.pointToLayer}
                 />
-
-                {/* <MarkerClusterGroup markers={markers}
-                                    wrapperOptions={{enableDefaultStyle: true}}
-                                    ref={(cluster) => console.log('cluster',cluster.leafletElement.toGeoJSON())}
-                /> */}
 
             </Map>
             </div>
