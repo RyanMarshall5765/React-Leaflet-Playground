@@ -14,7 +14,7 @@ class MapOne extends Component {
         this.onEachFeature = this.onEachFeature.bind(this)
         this.pointToLayer = this.pointToLayer.bind(this)
         this.state = {
-            center: [37.83, 14.33]
+            center: [35.53, 15.20]
         }
     }
         onEachFeature = (feature, layer) => {
@@ -26,8 +26,6 @@ class MapOne extends Component {
             }
             layer.bindPopup(popUpContent.join())
         } 
-
-
 
         pointToLayer = (feature,latlng) => {
             switch(feature.properties['place-details-order']) {
