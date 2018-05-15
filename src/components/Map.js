@@ -4,9 +4,19 @@ import L from 'leaflet'
 import { testJson} from '../data/places.js'
 import '../containers/App.css';
 
-
-
 let geojson = testJson();
+const simpleCrossBlack = L.icon({
+    iconUrl: 'images/simple_cross_black.svg',
+    iconSize: [38, 95],
+});
+const simpleCrossBlue = L.icon({
+    iconUrl: 'images/simple_cross_blue.svg',
+    iconSize: [38, 95],
+});
+const orthodoxCross = L.icon({
+    iconUrl: 'images/orthodox_cross_black.svg',
+    iconSize: [38, 95],
+});
 
 class MapOne extends Component {
     constructor(props) {
@@ -21,7 +31,7 @@ class MapOne extends Component {
             const popUpContent = [];
             for (const prop in feature.properties) {
                 if (feature.properties[prop] != null) {
-                    popUpContent.push('<h3>' + prop +  ' : ' + '</h3>' + feature.properties[prop] )
+                    popUpContent.push('<h3>' + prop +  ': </h3>' + feature.properties[prop] )
                 }
             }
             layer.bindPopup(popUpContent.join())
@@ -65,21 +75,3 @@ class MapOne extends Component {
     }
 }
 export default MapOne;
-
-
-const simpleCrossBlack = L.icon({
-    iconUrl: 'images/simple_cross_black.svg',
-    iconSize: [38, 95],
-});
-
-const simpleCrossBlue = L.icon({
-    iconUrl: 'images/simple_cross_blue.svg',
-    iconSize: [38, 95],
-});
-
-const orthodoxCross = L.icon({
-    iconUrl: 'images/orthodox_cross_black.svg',
-    iconSize: [38, 95],
-});
-
-
