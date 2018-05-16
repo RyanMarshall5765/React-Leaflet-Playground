@@ -4,8 +4,10 @@ import L from 'leaflet'
 import { testJson } from '../data/places.js'
 import '../containers/App.css';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
-import '../node_fix/MarkerCluster.css';
-import '../node_fix/MarkerCluster.Default.css';
+import 'leaflet.markercluster/dist/MarkerCluster.css';
+import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
+
+
 
 
 let geojson = testJson();
