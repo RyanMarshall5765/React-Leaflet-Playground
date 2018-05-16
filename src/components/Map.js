@@ -7,7 +7,7 @@ import MarkerClusterGroup from 'react-leaflet-markercluster';
 import '../node_fix/MarkerCluster.css';
 import '../node_fix/MarkerCluster.Default.css';
 
-const mark = L.markerClusterGroup();
+
 let geojson = testJson();
 const simpleCrossBlack = L.icon({
     iconUrl: 'images/simple_cross_black.svg',
@@ -56,38 +56,20 @@ class MapOne extends Component {
     render() {
         return (
             <div>
-                <Map
-                    center={this.state.center}
-                    zoom={8}
-                >
-                    <TileLayer
-                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                        maxZoom={18}
+                <Map center={this.state.center} zoom={8}>
+                    <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" maxZoom={18} />
 
-                    />
+                    <MarkerClusterGroup>
+                        <GeoJSON
+                            data={geojson}
+                            onEachFeature={this.onEachFeature}
+                            pointToLayer={this.pointToLayer}
+                        />
+                    </MarkerClusterGroup>
 
-                    <GeoJSON
-                        data={geojson}
-                        onEachFeature={this.onEachFeature}
-                        pointToLayer={this.pointToLayer}
-                    />
                 </Map>
             </div>
         );
     }
 }
 export default MapOne;
-
-// Pulls GeoJSON cords into a markers Array.
-// var markers = [];
-// for(const prop in feature.geometry){
-//     if(feature && feature.geometry){
-//       const coordinates = feature.geometry.coordinates;
-//       const point = {
-//         lat: coordinates[1],
-//         lng: coordinates[0]
-//       }
-//       markers.push(point);
-//       return markers
-//     }
-//  }
