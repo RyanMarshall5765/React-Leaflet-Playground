@@ -3675,12 +3675,7 @@ const worldMap = [
         "type": "FeatureCollection"
     }
 ];
-export const markers = [
-    {
-      name: 'Kottbusser Tor',
-      latlng: [15.5003272,38.1654608]
-    }
-  ];
+
 export const testJson = () => {
     return worldMap
 }
