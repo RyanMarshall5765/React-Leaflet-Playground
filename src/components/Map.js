@@ -3,6 +3,7 @@ import { Map, TileLayer, GeoJSON } from 'react-leaflet'
 import L from 'leaflet'
 import { testJson} from '../data/places.js'
 import '../containers/App.css';
+import MarkerClusterGroup from 'react-leaflet-markercluster';
 
 let geojson = testJson();
 const simpleCrossBlack = L.icon({
@@ -17,7 +18,7 @@ const orthodoxCross = L.icon({
     iconUrl: 'images/orthodox_cross_black.svg',
     iconSize: [38, 95],
 });
-
+    
 class MapOne extends Component {
     constructor(props) {
         super(props)
@@ -62,16 +63,28 @@ class MapOne extends Component {
                     maxZoom={18}
 
                 />
-               
+
                 <GeoJSON
                     data={geojson}
                     onEachFeature={this.onEachFeature}
                     pointToLayer={this.pointToLayer}
                 />
-
             </Map>
             </div>
         );
     }
 }
 export default MapOne;
+
+// Pulls GeoJSON cords into a markers Array. This is for the hopes of clustering by markers and keeping GeoJSON as the information.
+// var markers = [];
+// for(const prop in feature.geometry){
+//     if(feature && feature.geometry){
+//       const coordinates = feature.geometry.coordinates;
+//       const point = {
+//         lat: coordinates[1],
+//         lng: coordinates[0]
+//       }
+//       markers.push(point);
+//     }
+//  }
