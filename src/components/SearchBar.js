@@ -8,7 +8,6 @@ class SearchBar extends MapControl {
   createLeafletElement() {
     return GeoSearchControl({
       provider: new OpenStreetMapProvider(),
-      style: 'bar',
       showMarker: true,
       showPopup: false,
       autoClose: false,
