@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import { Map, TileLayer, GeoJSON, MapLayer } from 'react-leaflet'
+import { Map, TileLayer, GeoJSON} from 'react-leaflet'
 import L from 'leaflet'
 import { testJson } from '../data/places.js'
-import '../containers/App.css';
+import SearchBar from './SearchBar.js'
 import MarkerClusterGroup from 'react-leaflet-markercluster';
+import '../containers/App.css';
 import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
-
-
 
 
 let geojson = testJson();
@@ -60,7 +59,7 @@ class MapOne extends Component {
             <div>
                 <Map center={this.state.center} zoom={8}>
                     <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" maxZoom={18} />
-
+                    <SearchBar />
                     <MarkerClusterGroup>
                         <GeoJSON
                             data={geojson}
@@ -68,6 +67,7 @@ class MapOne extends Component {
                             pointToLayer={this.pointToLayer}
                         />
                     </MarkerClusterGroup>
+                    
 
                 </Map>
             </div>
