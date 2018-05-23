@@ -9,7 +9,7 @@ import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 
 
-let geojson = testJson();
+const geojson = testJson();
 const simpleCrossBlack = L.icon({
     iconUrl: 'images/simple_cross_black.svg',
     iconSize: [38, 95],
@@ -32,14 +32,69 @@ class MapOne extends Component {
             center: [35.53, 15.20]
         }
     }
+    // onEachFeature = (feature, layer) => {
+    //     const popUpContent = [];
+    //     for (const prop in feature.properties) {
+    //         if (feature.properties[prop] != null) {
+    //             popUpContent.push('<div class="tabs">' +
+
+    //             '<div class="tab" id="first_tab">' +
+    //             '<div class="content">' +
+    //             '<h3>' + prop + ': </h3>' + feature.properties[prop] +
+    //             '</div>' +
+    //             '</div>' +
+                
+    //             '<div class="tab" id="second_tab">' +
+    //             '<div class="content">' +
+    //             '<h3>' + prop + ': </h3>' + feature.properties[prop] +
+    //             '</div>' +
+    //             '</div>' +
+                
+    //             '<div class="tab" id="third_tab">' +
+    //             '<div class="content">' + 
+    //             '<h3>' + prop + ': </h3>' + feature.properties[prop] +
+    //             '</div>' +
+    //             '</div>' +
+    //             '<ul class="tabs-link">' +
+    //             '<li class="tab-link"> <a href="#first_tab"><span>First</span></a></li>' +
+    //             '<li class="tab-link"> <a href="#second_tab"><span>Second</span></a></li>' +
+    //             '<li class="tab-link"> <a href="#third_tab"><span>Third</span></a></li>' +
+    //             '</ul>' +
+    //             '</div>')
+    //         }
+    //     }
+    //     layer.bindPopup(popUpContent.join())
+    // }
+
     onEachFeature = (feature, layer) => {
-        const popUpContent = [];
-        for (const prop in feature.properties) {
-            if (feature.properties[prop] != null) {
-                popUpContent.push('<h3>' + prop + ': </h3>' + feature.properties[prop])
-            }
-        }
-        layer.bindPopup(popUpContent.join())
+        const content = '<div class="tabs">' +
+
+        '<div class="tab" id="first_tab">' +
+        '<div class="content">' +
+        '<b>Content of First Tab</b>' +
+        '</div>' +
+        '</div>' +
+        
+        '<div class="tab" id="second_tab">' +
+        '<div class="content">' +
+        '<b>Content of Second Tab</b>' +
+        '</div>' +
+        '</div>' +
+        
+        '<div class="tab" id="third_tab">' +
+        '<div class="content">' +
+        '<b>Content of Third Tab</b>' +
+        '</div>' +
+        '</div>' +
+        
+        '<ul class="tabs-link">' +
+        '<li class="tab-link"> <a href="#first_tab"><span>First</span></a></li>' +
+        '<li class="tab-link"> <a href="#second_tab"><span>Second</span></a></li>' +
+        '<li class="tab-link"> <a href="#third_tab"><span>Third</span></a></li>' +
+        '</ul>' +
+        '</div>';
+
+        layer.bindPopup(content)
     }
 
     pointToLayer = (feature, latlng) => {
@@ -67,8 +122,6 @@ class MapOne extends Component {
                             pointToLayer={this.pointToLayer}
                         />
                     </MarkerClusterGroup>
-                    
-
                 </Map>
             </div>
         );
