@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import Map from '../components/Map';
+import NavBar from './NavBar';
 
 // App component
 class App extends Component {
   render() {
-    return <Map />;
+    return <NavBar />;
   }
 }
 
