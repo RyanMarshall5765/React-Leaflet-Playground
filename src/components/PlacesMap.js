@@ -7,8 +7,7 @@ import MarkerClusterGroup from 'react-leaflet-markercluster';
 import '../containers/App.css';
 import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import 'react-tabs/style/react-tabs.css';
+
 
 const geojson = testJson();
 const simpleCrossBlack = L.icon({
@@ -34,36 +33,37 @@ export class PlacesMap extends Component {
         }
     }
     onEachFeature = (feature, layer) => {
-        const popUpContent = [];
-        for (const prop in feature.properties) {
-            if (feature.properties[prop] != null) {
-                popUpContent.push(prop + ': ' + feature.properties[prop] + '<br>')
+        const placesTabContent = [];
+        const locationTabContent = [];
+        
+        for (const prop in feature.properties.place) {
+            if (feature.properties.place[prop] != null) {
+                placesTabContent.push(prop + ': ' + feature.properties.place[prop] + '<br>')
+            }
+            for (const prop in feature.properties.location) {
+                if (feature.properties.location[prop] != null) {
+                    locationTabContent.push(prop + ': ' + feature.properties.location[prop] + '<br>')
+                }
             }
         }
+
         const content = '<div class="tabs">' +
 
             '<div class="tab" id="first_tab">' +
             '<div class="content">'
-            + popUpContent +
+            + placesTabContent +
             '</div>' +
             '</div>' +
 
             '<div class="tab" id="second_tab">' +
             '<div class="content">' +
-            '<b>Content of Second Tab</b>' +
-            '</div>' +
-            '</div>' +
-
-            '<div class="tab" id="third_tab">' +
-            '<div class="content">' +
-            '<b>Content of Third Tab</b>' +
+            + locationTabContent +
             '</div>' +
             '</div>' +
 
             '<ul class="tabs-link">' +
-            '<li class="tab-link"> <a href="#first_tab"><span>First</span></a></li>' +
-            '<li class="tab-link"> <a href="#second_tab"><span>Second</span></a></li>' +
-            '<li class="tab-link"> <a href="#third_tab"><span>Third</span></a></li>' +
+            '<li class="tab-link"> <a href="#first_tab"><span>Places</span></a></li>' +
+            '<li class="tab-link"> <a href="#second_tab"><span>Location</span></a></li>' +
             '</ul>' +
             '</div>'
 
@@ -71,39 +71,8 @@ export class PlacesMap extends Component {
         layer.bindPopup(content)
     }
 
-    // onEachFeature = (feature, layer) => {
-    //     const content = '<div class="tabs">' +
-
-    //     '<div class="tab" id="first_tab">' +
-    //     '<div class="content">' +
-    //     '<b>Content of First Tab</b>' +
-    //     '</div>' +
-    //     '</div>' +
-
-    //     '<div class="tab" id="second_tab">' +
-    //     '<div class="content">' +
-    //     '<b>Content of Second Tab</b>' +
-    //     '</div>' +
-    //     '</div>' +
-
-    //     '<div class="tab" id="third_tab">' +
-    //     '<div class="content">' +
-    //     '<b>Content of Third Tab</b>' +
-    //     '</div>' +
-    //     '</div>' +
-
-    //     '<ul class="tabs-link">' +
-    //     '<li class="tab-link"> <a href="#first_tab"><span>First</span></a></li>' +
-    //     '<li class="tab-link"> <a href="#second_tab"><span>Second</span></a></li>' +
-    //     '<li class="tab-link"> <a href="#third_tab"><span>Third</span></a></li>' +
-    //     '</ul>' +
-    //     '</div>';
-
-    //     layer.bindPopup(content)
-    // }
-
     pointToLayer = (feature, latlng) => {
-        switch (feature.properties['place-details-order']) {
+        switch (feature.properties.place.details.order) {
             case 'Basilian':
                 return L.marker(latlng, { icon: orthodoxCross });
             case 'Augustinian Canons':
