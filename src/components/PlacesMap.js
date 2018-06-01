@@ -8,7 +8,6 @@ import '../containers/App.css';
 import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 
-
 const geojson = testJson();
 const simpleCrossBlack = L.icon({
     iconUrl: 'images/simple_cross_black.svg',
@@ -29,47 +28,40 @@ export class PlacesMap extends Component {
         this.onEachFeature = this.onEachFeature.bind(this)
         this.pointToLayer = this.pointToLayer.bind(this)
         this.state = {
-            center: [37.73, 14.20]
+            center: [37.73, 14.20],
         }
     }
+
     onEachFeature = (feature, layer) => {
-        const placesTabContent = [];
         const locationTabContent = [];
-
-
-        for (const prop in feature.properties.location) {
-            if (feature.properties.location[prop] != null) {
-                locationTabContent.push('<b>' + prop + '</b> : ' + feature.properties.location[prop] + '<br>')
-            }
-        }
+        const placesTabContent = [];
 
         for (const prop in feature.properties.place) {
             if (typeof(feature.properties.place[prop]) === 'object') {
-                placesTabContent.push('<b>' + prop + '</b> : ' + feature.properties.place[prop] + '<br>')
+                //Recursive call here
             } else {
-                placesTabContent.push('<b>' + prop + '</b> : ' + feature.properties.place[prop] + '<br>')
+                placesTabContent.push(`<b> ${prop} </b> : ${feature.properties.place[prop]} <br>`)
             }
           }
 
-        const content = '<div class="tabs">' +
+        
 
-            '<div class="tab" id="places_tab">' +
-            '<div class="content">'
-            + placesTabContent +
-            '</div>' +
-            '</div>' +
-
-            '<div class="tab" id="location_tab">' +
-            '<div class="content">' +
-            + locationTabContent +
-            '</div>' +
-            '</div>' +
-
-            '<ul class="tabs-link">' +
-            '<li class="tab-link"> <a href="#places_tab"><span>Places</span></a></li>' +
-            '<li class="tab-link"> <a href="#location_tab"><span>Location</span></a></li>' +
-            '</ul>' +
-            '</div>'
+        const content =`<div class="tabs">
+            <div class="tab" id="places_tab">
+            <div class="content">
+            ${placesTabContent} 
+            </div>
+            </div> 
+            <div class="tab" id="location_tab">
+            <div class="content">
+            ${locationTabContent} 
+            </div>
+            </div>
+            <ul class="tabs-link">
+            <li class="tab-link"> <a href="#places_tab"><span>Places</span></a></li>
+            <li class="tab-link"> <a href="#location_tab"><span>Location</span></a></li>
+            </ul>
+            </div>`
 
 
         layer.bindPopup(content)
