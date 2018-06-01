@@ -35,39 +35,43 @@ export class PlacesMap extends Component {
     onEachFeature = (feature, layer) => {
         const placesTabContent = [];
         const locationTabContent = [];
-        
-        for (const prop in feature.properties.place) {
-            if (feature.properties.place[prop] != null) {
-                placesTabContent.push(prop + ': ' + feature.properties.place[prop] + '<br>')
-            }
-            for (const prop in feature.properties.location) {
-                if (feature.properties.location[prop] != null) {
-                    locationTabContent.push(prop + ': ' + feature.properties.location[prop] + '<br>')
-                }
+
+
+        for (const prop in feature.properties.location) {
+            if (feature.properties.location[prop] != null) {
+                locationTabContent.push('<b>' + prop + '</b> : ' + feature.properties.location[prop] + '<br>')
             }
         }
 
+        for (const prop in feature.properties.place) {
+            if (typeof(feature.properties.place[prop]) === 'object') {
+                placesTabContent.push('<b>' + prop + '</b> : ' + feature.properties.place[prop] + '<br>')
+            } else {
+                placesTabContent.push('<b>' + prop + '</b> : ' + feature.properties.place[prop] + '<br>')
+            }
+          }
+
         const content = '<div class="tabs">' +
 
-            '<div class="tab" id="first_tab">' +
+            '<div class="tab" id="places_tab">' +
             '<div class="content">'
             + placesTabContent +
             '</div>' +
             '</div>' +
 
-            '<div class="tab" id="second_tab">' +
+            '<div class="tab" id="location_tab">' +
             '<div class="content">' +
             + locationTabContent +
             '</div>' +
             '</div>' +
 
             '<ul class="tabs-link">' +
-            '<li class="tab-link"> <a href="#first_tab"><span>Places</span></a></li>' +
-            '<li class="tab-link"> <a href="#second_tab"><span>Location</span></a></li>' +
+            '<li class="tab-link"> <a href="#places_tab"><span>Places</span></a></li>' +
+            '<li class="tab-link"> <a href="#location_tab"><span>Location</span></a></li>' +
             '</ul>' +
             '</div>'
 
-        
+
         layer.bindPopup(content)
     }
 
