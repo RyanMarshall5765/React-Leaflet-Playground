@@ -1,26 +1,13 @@
 import React, { Component } from 'react';
 import { Map, TileLayer, GeoJSON } from 'react-leaflet'
 import L from 'leaflet'
-import { testJson } from '../data/places.js'
+import { geojson } from '../data/places.js'
 import SearchBar from './SearchBar.js'
 import MarkerClusterGroup from 'react-leaflet-markercluster';
 import '../containers/App.css';
 import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 
-const geojson = testJson();
-const simpleCrossBlack = L.icon({
-    iconUrl: 'images/simple_cross_black.svg',
-    iconSize: [38, 95],
-});
-const simpleCrossBlue = L.icon({
-    iconUrl: 'images/simple_cross_blue.svg',
-    iconSize: [38, 95],
-});
-const orthodoxCross = L.icon({
-    iconUrl: 'images/orthodox_cross_black.svg',
-    iconSize: [38, 95],
-});
 
 export class PlacesMap extends Component {
     constructor(props) {
@@ -29,22 +16,33 @@ export class PlacesMap extends Component {
         this.pointToLayer = this.pointToLayer.bind(this)
         this.state = {
             center: [37.73, 14.20],
+            orthodoxCross: L.icon({
+                iconUrl: 'images/orthodox_cross_black.svg',
+                iconSize: [38, 95],
+            }),
+            simpleCrossBlue: L.icon({
+                iconUrl: 'images/simple_cross_blue.svg',
+                iconSize: [38, 95],
+            }),
+            simpleCrossBlack: L.icon({
+                iconUrl: 'images/simple_cross_black.svg',
+                iconSize: [38, 95],
+            })
         }
     }
 
+
     onEachFeature = (feature, layer) => {
-        const locationTabContent = [];
-        const placesTabContent = [];
+        const placesTabContent = []
+        const locationTabContent = []
 
         for (const prop in feature.properties.place) {
-            if (typeof(feature.properties.place[prop]) === 'object') {
-                //Recursive call here
+            if (typeof feature.properties.place[prop] === 'object') {
+                console.log('Here')
             } else {
                 placesTabContent.push(`<b> ${prop} </b> : ${feature.properties.place[prop]} <br>`)
-            }
           }
-
-        
+        }
 
         const content =`<div class="tabs">
             <div class="tab" id="places_tab">
@@ -70,11 +68,11 @@ export class PlacesMap extends Component {
     pointToLayer = (feature, latlng) => {
         switch (feature.properties.place.details.order) {
             case 'Basilian':
-                return L.marker(latlng, { icon: orthodoxCross });
+                return L.marker(latlng, { icon: this.state.orthodoxCross });
             case 'Augustinian Canons':
-                return L.marker(latlng, { icon: simpleCrossBlue });
+                return L.marker(latlng, { icon: this.state.simpleCrossBlue });
             default:
-                return L.marker(latlng, { icon: simpleCrossBlack });
+                return L.marker(latlng, { icon: this.state.simpleCrossBlack });
         }
     }
 
