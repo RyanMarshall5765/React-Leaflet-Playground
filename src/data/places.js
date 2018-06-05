@@ -1,4 +1,4 @@
-const worldMap = [
+export const geojson = 
     {
         "type" : "FeatureCollection",
         "features" : [ {
@@ -10779,9 +10779,9 @@ const worldMap = [
           }
         } ]
       }
-];
 
-export const testJson = () => {
-    return worldMap
-}
+
+// export const testJson = () => {
+//     return worldMap
+// }
 
