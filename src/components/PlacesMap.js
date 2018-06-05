@@ -8,6 +8,22 @@ import '../containers/App.css';
 import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 
+const test = {
+    "whatever": {
+        "indeed": {
+            "hello": "goodbye!"
+        }
+    },
+    "wherever": "indeed"
+}
+
+const keyValuePairs = (values, currentValue) => {
+    if (typeof currentValue === "object"){
+        Object.values(currentValue).map(keyValuePairs.bind(true,values))
+    } else{
+        values.push(currentValue)
+    }
+}
 
 export class PlacesMap extends Component {
     constructor(props) {
@@ -35,6 +51,8 @@ export class PlacesMap extends Component {
     onEachFeature = (feature, layer) => {
         const placesTabContent = []
         const locationTabContent = []
+
+        Object.values(test).map(keyValuePairs.bind(true, locationTabContent)); 
 
         for (const prop in feature.properties.place) {
             if (typeof feature.properties.place[prop] === 'object') {
