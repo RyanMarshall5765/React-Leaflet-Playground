@@ -8,22 +8,30 @@ import '../containers/App.css';
 import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 
-const test = {
-    "whatever": {
-        "indeed": {
-            "hello": "goodbye!"
+
+function parseGeoJson(data) {
+    return Object.entries(data).map((property) => {
+
+        const key = property[0];
+        const value = property[1];
+
+        if (typeof value === "object") {
+            return parseGeoJson(value);
         }
-    },
-    "wherever": "indeed"
+        else {
+            return (
+                `${key} : ${value}`
+            )
+        }
+    })
 }
 
-const keyValuePairs = (values, currentValue) => {
-    if (typeof currentValue === "object"){
-        Object.values(currentValue).map(keyValuePairs.bind(true,values))
-    } else{
-        values.push(currentValue)
-    }
-}
+const placeContent = geojson.features.map((feature) => {
+    const place = feature.properties.place;
+    if (place) return parseGeoJson(place);
+});
+
+console.log(placeContent);
 
 export class PlacesMap extends Component {
     constructor(props) {
@@ -52,17 +60,15 @@ export class PlacesMap extends Component {
         const placesTabContent = []
         const locationTabContent = []
 
-        Object.values(test).map(keyValuePairs.bind(true, locationTabContent)); 
-
         for (const prop in feature.properties.place) {
             if (typeof feature.properties.place[prop] === 'object') {
                 console.log('Here')
             } else {
                 placesTabContent.push(`<b> ${prop} </b> : ${feature.properties.place[prop]} <br>`)
-          }
+            }
         }
 
-        const content =`<div class="tabs">
+        const content = `<div class="tabs">
             <div class="tab" id="places_tab">
             <div class="content">
             ${placesTabContent} 
