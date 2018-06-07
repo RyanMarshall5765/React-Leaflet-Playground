@@ -8,36 +8,12 @@ import '../containers/App.css';
 import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 
-
-function parseGeoJson(data) {
-    return Object.entries(data).map((property) => {
-
-        const key = property[0];
-        const value = property[1];
-
-        if (typeof value === "object") {
-            return parseGeoJson(value);
-        }
-        else {
-            return (
-                `${key} : ${value}`
-            )
-        }
-    })
-}
-
-const placeContent = geojson.features.map((feature) => {
-    const place = feature.properties.place;
-    if (place) return parseGeoJson(place);
-});
-
-console.log(placeContent);
-
 export class PlacesMap extends Component {
     constructor(props) {
         super(props)
         this.onEachFeature = this.onEachFeature.bind(this)
         this.pointToLayer = this.pointToLayer.bind(this)
+        this.parseGeoJson = this.parseGeoJson.bind(this)
         this.state = {
             center: [37.73, 14.20],
             orthodoxCross: L.icon({
@@ -55,28 +31,41 @@ export class PlacesMap extends Component {
         }
     }
 
+    parseGeoJson = (data) => {
+        return Object.entries(data).map(([key, value]) => {
+            if (value) {
+                if (typeof value === "object") {
+                    return this.parseGeoJson(value);
+                } else {
+                    return (`${key} : ${value} <br>`)
+                }
+            } else {
+                return (`${key} is empty <br>`)
+            }
+        })
+    };
 
     onEachFeature = (feature, layer) => {
-        const placesTabContent = []
-        const locationTabContent = []
 
-        for (const prop in feature.properties.place) {
-            if (typeof feature.properties.place[prop] === 'object') {
-                console.log('Here')
-            } else {
-                placesTabContent.push(`<b> ${prop} </b> : ${feature.properties.place[prop]} <br>`)
-            }
-        }
+        const placeContent = geojson.features.map((feature) => {
+            const place = feature.properties.place;
+            return place ? this.parseGeoJson(place) : null;
+        })
+
+        const locationContent = geojson.features.map((feature) => {
+            const location = feature.properties.location;
+            return location ? this.parseGeoJson(location) : null;
+        })
 
         const content = `<div class="tabs">
             <div class="tab" id="places_tab">
             <div class="content">
-            ${placesTabContent} 
+            ${placeContent} 
             </div>
             </div> 
             <div class="tab" id="location_tab">
             <div class="content">
-            ${locationTabContent} 
+            ${locationContent} 
             </div>
             </div>
             <ul class="tabs-link">
