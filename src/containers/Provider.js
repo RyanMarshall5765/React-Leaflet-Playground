@@ -1,14 +1,18 @@
+import { geojson } from '../data/places.js'
+
 class Provider {
   async search({ query }) {
-    return [{
-  	  x: Number,                      // lon
-      y: Number,                      // lat
-      label: String,                  // formatted address
-      bounds: [
-        [Number, Number],             // s, w - lat, lon
-        [Number, Number],             // n, e - lat, lon
-      ],
-    }]
+    return geojson.features.map(function (feature) {
+      return {
+        x: feature.geometry.coordinates[0],
+        y: feature.geometry.coordinates[1],
+        label: feature.properties.place.names.name,
+        bounds: [
+          [Number, Number], 
+          [Number, Number]
+        ],
+      };
+    });
   }
 }
 
