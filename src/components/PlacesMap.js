@@ -78,7 +78,7 @@ export class PlacesMap extends Component {
     layer.bindPopup(content);
   }
 
-  pointToLayer = (feature, latlng) => {
+  pointToLayer(feature, latlng) {
     switch (feature.properties.place.details.order) {
       case "Basilian":
         return L.marker(latlng, { icon: this.state.orthodoxCross });
@@ -87,7 +87,7 @@ export class PlacesMap extends Component {
       default:
         return L.marker(latlng, { icon: this.state.simpleCrossBlack });
     }
-  };
+  }
 
   render() {
     return (
