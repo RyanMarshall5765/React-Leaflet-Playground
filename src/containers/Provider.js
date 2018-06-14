@@ -15,12 +15,14 @@ class Provider {
     return name ? this.parse(name) : null;
   }
 
-  async search() {
-    return geojson.features.map(feature => ({
-      x: feature.geometry.coordinates[0],
-      y: feature.geometry.coordinates[1],
-      label: this.nameContent(feature)
-    }));
+  async search({ query }) {
+    return geojson.features
+      .filter(feature => this.nameContent(feature).indexOf(query) > -1)
+      .map(feature => ({
+        x: feature.geometry.coordinates[0],
+        y: feature.geometry.coordinates[1],
+        label: this.nameContent(feature)
+      }));
   }
 }
 
