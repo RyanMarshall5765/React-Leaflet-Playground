@@ -1,40 +1,26 @@
-import { geojson } from '../data/places.js'
-
-
-
-const nameParse = (data) => {
-  return Object.values(data).map((value) => {
-      if (value) {
-          if (typeof value === "object") {
-              return nameParse(value);
-          } else {
-              return (value)
-          }
-      } else {
-          return ('Here')
-      }
-  })
-};
-const nameContent = geojson.features.map((feature) => {
-  const name = feature.properties.place.names[1];
-  return name ? nameParse(name) : null;
-});
-
-console.log(nameContent)
+import { geojson } from "../data/places.js";
 
 class Provider {
-  async search({ query }) {
-    return geojson.features.map(function (feature) {
-      return {
-        x: feature.geometry.coordinates[0],
-        y: feature.geometry.coordinates[1],
-        label: nameContent,
-        bounds: [
-          [Number, Number], 
-          [Number, Number]
-        ],
-      };
+  parse(data) {
+    return Object.values(data).map(value => {
+      if (value) {
+        return typeof value === "object" ? this.parse(value) : value;
+      }
+      return null;
     });
+  }
+
+  nameContent(feature) {
+    const name = feature.properties.place.names[0];
+    return name ? this.parse(name) : null;
+  }
+
+  async search() {
+    return geojson.features.map(feature => ({
+      x: feature.geometry.coordinates[0],
+      y: feature.geometry.coordinates[1],
+      label: this.nameContent(feature)
+    }));
   }
 }
 
