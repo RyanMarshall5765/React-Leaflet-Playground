@@ -9,12 +9,7 @@ class SearchBar extends MapControl {
   createLeafletElement() {
     return GeoSearchControl({
       provider: new Provider(),
-      showMarker: true,
-      showPopup: false,
-      autoClose: false,
-      retainZoomLevel: false,
-      animateZoom: true,
-      keepResult: false,
+      autoClose: true,
       searchLabel: 'search'
     });
   }
