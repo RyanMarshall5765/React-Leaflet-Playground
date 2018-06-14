@@ -17,7 +17,7 @@ class Provider {
 
   async search({ query }) {
     return geojson.features
-      .filter(feature => this.nameContent(feature).toString().toLowerCase().indexOf(query) > -1)
+      .filter(feature => this.nameContent(feature).toString().toLowerCase().indexOf(query.toLowerCase()) > -1)
       .map(feature => ({
         x: feature.geometry.coordinates[0],
         y: feature.geometry.coordinates[1],
