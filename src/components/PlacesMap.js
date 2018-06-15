@@ -43,26 +43,21 @@ export class PlacesMap extends Component {
     });
   }
 
-  placeContent(feature) {
-    const place = feature.properties.place;
-    return place ? this.parseGeoJson(place) : null;
-  }
-
-  locationContent(feature) {
-    const location = feature.properties.location;
-    return location ? this.parseGeoJson(location) : null;
+  popupContent(feature, info) {
+    const content = feature.properties[info];
+    return content ? this.parseGeoJson(content) : null;
   }
 
   onEachFeature(feature, layer) {
     const content = `<div class="tabs">
             <div class="tab" id="places_tab">
             <div class="content">
-            ${this.placeContent(feature)} 
+            ${this.popupContent(feature, "place")} 
             </div>
             </div> 
             <div class="tab" id="location_tab">
             <div class="content">
-            ${this.locationContent(feature)} 
+            ${this.popupContent(feature, "location")} 
             </div>
             </div>
             <ul class="tabs-link">
