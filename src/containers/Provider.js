@@ -5,7 +5,7 @@ class Provider {
     return geojson.features
       .filter(
         feature =>
-        feature.properties.place.names[0].name
+          feature.properties.place.names[0].name
             .toLowerCase()
             .indexOf(query.toLowerCase()) > -1
       )
