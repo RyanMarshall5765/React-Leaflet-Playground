@@ -35,15 +35,11 @@ export class PlacesMap extends Component {
 
   parseGeoJson(data) {
     return Object.entries(data).map(([key, value]) => {
-      if (value) {
-        if (typeof value === "object") {
-          return this.parseGeoJson(value);
-        } else {
-          return `${key} : ${value} <br>`;
-        }
-      } else {
-        return `${key} is empty <br>`;
-      }
+      if (value)
+        return typeof value === "object"
+          ? this.parseGeoJson(value)
+          : `${key} : ${value} <br>`;
+      return `${key} is empty <br>`;
     });
   }
 
