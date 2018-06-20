@@ -7,6 +7,13 @@ import MarkerClusterGroup from "react-leaflet-markercluster";
 import "../containers/App.css";
 import "leaflet.markercluster/dist/MarkerCluster.css";
 import "leaflet.markercluster/dist/MarkerCluster.Default.css";
+import Slider from "rc-slider";
+import "rc-slider/assets/index.css";
+
+const style = { width: 600, margin: 50 };
+function printToConsoleVlaue(value) {
+  console.log(value); //eslint-disable-line
+}
 
 export class PlacesMap extends Component {
   constructor(props) {
@@ -80,6 +87,17 @@ export class PlacesMap extends Component {
     }
   }
 
+  // BrainStorm Code -- Idea of how to make slider remove markers
+  // timeSlider(geojson, sliderValue) {
+  //   return geojson.map(time => {
+  //     if (geojson.time > sliderValue) {
+  //       return <GeoJSON With corresponding data/>
+  //     } else {
+  //       return nothing
+  //     }
+  //   });
+  // }
+
   render() {
     return (
       <div>
@@ -97,6 +115,8 @@ export class PlacesMap extends Component {
             />
           </MarkerClusterGroup>
         </Map>
+        <p>Time Slider Test</p>
+        <Slider style={style} onChange={printToConsoleVlaue} />
       </div>
     );
   }
