@@ -6,7 +6,7 @@ import { pointToLayer } from "../components/PlacesMap";
 describe("Basilian Marker", () => {
   it("Should return the Orthodox Cross", () => {
     expect(
-      pointToLayer({
+      pointToLayer([{
         type: "Feature",
         geometry: {
           type: "Point",
@@ -100,7 +100,7 @@ describe("Basilian Marker", () => {
             ]
           }
         }
-      }).toBe(L.marker(latlng, { icon: this.state.orthodoxCross }))
+      }]).toBe(L.marker(latlng, { icon: this.state.orthodoxCross }))
     );
   });
 });
