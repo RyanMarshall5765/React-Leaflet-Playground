@@ -13101,7 +13101,3 @@ export const geojson = {
     }
   ]
 };
-
-// export const testJson = () => {
-//     return worldMap
-// }
