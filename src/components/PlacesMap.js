@@ -7,13 +7,6 @@ import MarkerClusterGroup from "react-leaflet-markercluster";
 import "../containers/App.css";
 import "leaflet.markercluster/dist/MarkerCluster.css";
 import "leaflet.markercluster/dist/MarkerCluster.Default.css";
-import Slider from "rc-slider";
-import "rc-slider/assets/index.css";
-
-const style = { width: 600, margin: 50 };
-function printToConsoleVlaue(value) {
-  console.log(value); //eslint-disable-line
-}
 
 export class PlacesMap extends Component {
   constructor(props) {
@@ -56,24 +49,24 @@ export class PlacesMap extends Component {
   }
 
   onEachFeature(feature, layer) {
-    const content = `<div class="tabs">
-            <div class="tab" id="places_tab">
-            <div class="content">
-            ${this.popupContent(feature, "place")} 
-            </div>
-            </div> 
-            <div class="tab" id="location_tab">
-            <div class="content">
-            ${this.popupContent(feature, "location")} 
-            </div>
-            </div>
-            <ul class="tabs-link">
-            <li class="tab-link"> <a href="#places_tab"><span>Places</span></a></li>
-            <li class="tab-link"> <a href="#location_tab"><span>Location</span></a></li>
-            </ul>
-            </div>`;
-
-    layer.bindPopup(content);
+    layer.bindPopup(
+      `<div class="tabs">
+    <div class="tab" id="places_tab">
+    <div class="content">
+    ${this.popupContent(feature, "place")} 
+    </div>
+    </div> 
+    <div class="tab" id="location_tab">
+    <div class="content">
+    ${this.popupContent(feature, "location")} 
+    </div>
+    </div>
+    <ul class="tabs-link">
+    <li class="tab-link"> <a href="#places_tab"><span>Places</span></a></li>
+    <li class="tab-link"> <a href="#location_tab"><span>Location</span></a></li>
+    </ul>
+    </div>`
+    );
   }
 
   pointToLayer(feature, latlng) {
@@ -86,17 +79,6 @@ export class PlacesMap extends Component {
         return L.marker(latlng, { icon: this.state.simpleCrossBlack });
     }
   }
-
-  // BrainStorm Code -- Idea of how to make slider remove markers
-  // timeSlider(geojson, sliderValue) {
-  //   return geojson.map(time => {
-  //     if (geojson.time > sliderValue) {
-  //       return <GeoJSON With corresponding data/>
-  //     } else {
-  //       return nothing
-  //     }
-  //   });
-  // }
 
   render() {
     return (
@@ -115,8 +97,6 @@ export class PlacesMap extends Component {
             />
           </MarkerClusterGroup>
         </Map>
-        <p>Time Slider Test</p>
-        <Slider style={style} onChange={printToConsoleVlaue} />
       </div>
     );
   }
