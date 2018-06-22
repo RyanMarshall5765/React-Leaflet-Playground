@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Range } from "rc-slider";
-import { geojson } from "../data/places";
+// import { geojson } from "../data/places";
 import "rc-slider/assets/index.css";
 
 const style = { width: 400, margin: 50 };
@@ -10,12 +10,12 @@ class TimeSlider extends Component {
     super(props);
     this.state = {
       lowerBound: 1100,
-      upperBound: 2018,
+      upperBound: 1250,
       value: [1100, 1250]
     };
   }
   log(value) {
-    console.log(value); //eslint-disable-line
+    console.log(value); 
   }
   onLowerBoundChange = e => {
     this.setState({ lowerBound: +e.target.value });
@@ -72,6 +72,7 @@ class TimeSlider extends Component {
           value={this.state.value}
           onChange={this.onSliderChange}
           style={style}
+          max={2018}
         />
       </div>
     );
