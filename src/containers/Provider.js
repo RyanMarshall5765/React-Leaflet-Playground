@@ -1,4 +1,4 @@
-import { geojson } from "../data/places.js";
+import { geojson } from "../data/places";
 
 class Provider {
   async search({ query }) {
