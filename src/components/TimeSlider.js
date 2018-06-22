@@ -1,17 +1,8 @@
 import React, { Component } from "react";
 import { Range } from "rc-slider";
+import { geojson } from "../data/places";
 import "rc-slider/assets/index.css";
 
-// BrainStorm Code -- Idea of how to make slider remove markers
-// timeSlider(geojson, sliderValue) {
-//   return geojson.map(time => {
-//     if (geojson.time > sliderValue) {
-//       return <GeoJSON With corresponding data/>
-//     } else {
-//       return nothing
-//     }
-//   });
-// }
 const style = { width: 400, margin: 50 };
 
 class TimeSlider extends Component {
@@ -42,6 +33,20 @@ class TimeSlider extends Component {
     const { lowerBound, upperBound } = this.state;
     this.setState({ value: [lowerBound, upperBound] });
   };
+  // dynamicallyChangeMarkers(feature, lowerBound, upperBound) {
+  //   return feature.properties.map(time => {
+  //     if (
+  //       feature.properties.details["earliest-attestation"] >
+  //         lowerBoundSliderValue &&
+  //       feature.properties.details["earliest-attestation"] <
+  //         upperBoundSliderValue
+  //     ) {
+  //       return <GeoJSON With corresponding data />;
+  //     } else {
+  //       return nothing;
+  //     }
+  //   });
+  // }
   render() {
     return (
       <div>
