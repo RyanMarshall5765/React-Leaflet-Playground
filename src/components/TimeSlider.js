@@ -1,9 +1,11 @@
 import React, { Component } from "react";
-import { Range } from "rc-slider";
+import Slider from "rc-slider";
 // import { geojson } from "../data/places";
 import "rc-slider/assets/index.css";
 
 const style = { width: 400, margin: 50 };
+const createSliderWithTooltip = Slider.createSliderWithTooltip;
+const Range = createSliderWithTooltip(Slider.Range);
 
 class TimeSlider extends Component {
   constructor(props) {
@@ -11,11 +13,12 @@ class TimeSlider extends Component {
     this.state = {
       lowerBound: 1100,
       upperBound: 1250,
-      value: [1100, 1250]
+      value: [1100, 1250],
+      maxValue: 2018
     };
   }
   log(value) {
-    console.log(value); 
+    console.log(value);
   }
   onLowerBoundChange = e => {
     this.setState({ lowerBound: +e.target.value });
@@ -72,7 +75,8 @@ class TimeSlider extends Component {
           value={this.state.value}
           onChange={this.onSliderChange}
           style={style}
-          max={2018}
+          max={this.state.maxValue}
+          tipFormatter={value => `${value}`}
         />
       </div>
     );
