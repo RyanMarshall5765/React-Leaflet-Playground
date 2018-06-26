@@ -53,12 +53,12 @@ export class PlacesMap extends Component {
       `<div class="tabs">
     <div class="tab" id="places_tab">
     <div class="content">
-    ${this.popupContent(feature, "place")} 
+    ${this.popupContent(feature, "place")}
     </div>
-    </div> 
+    </div>
     <div class="tab" id="location_tab">
     <div class="content">
-    ${this.popupContent(feature, "location")} 
+    ${this.popupContent(feature, "location")}
     </div>
     </div>
     <ul class="tabs-link">
@@ -70,14 +70,16 @@ export class PlacesMap extends Component {
   }
 
   pointToLayer(feature, latlng) {
-    switch (feature.properties.place.details.order) {
-      case "Basilian":
-        return L.marker(latlng, { icon: this.state.orthodoxCross });
-      case "Augustinian Canons":
-        return L.marker(latlng, { icon: this.state.simpleCrossBlue });
-      default:
-        return L.marker(latlng, { icon: this.state.simpleCrossBlack });
-    }
+    const orderType = {
+      Basilian: L.marker(latlng, { icon: this.state.orthodoxCross }),
+      "Augustinian Canons": L.marker(latlng, {
+        icon: this.state.simpleCrossBlue
+      })
+    };
+    return (
+      orderType[feature.properties.place.details.order] ||
+      L.marker(latlng, { icon: this.state.simpleCrossBlack })
+    );
   }
 
   render() {
