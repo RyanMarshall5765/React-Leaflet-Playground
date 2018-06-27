@@ -7,6 +7,7 @@ import MarkerClusterGroup from "react-leaflet-markercluster";
 import "../containers/App.css";
 import "leaflet.markercluster/dist/MarkerCluster.css";
 import "leaflet.markercluster/dist/MarkerCluster.Default.css";
+import TimeSlider from "./TimeSlider";
 
 export class PlacesMap extends Component {
   constructor(props) {
@@ -51,21 +52,21 @@ export class PlacesMap extends Component {
   onEachFeature(feature, layer) {
     layer.bindPopup(
       `<div class="tabs">
-    <div class="tab" id="places_tab">
-    <div class="content">
-    ${this.popupContent(feature, "place")}
-    </div>
-    </div>
-    <div class="tab" id="location_tab">
-    <div class="content">
-    ${this.popupContent(feature, "location")}
-    </div>
-    </div>
-    <ul class="tabs-link">
-    <li class="tab-link"> <a href="#places_tab"><span>Places</span></a></li>
-    <li class="tab-link"> <a href="#location_tab"><span>Location</span></a></li>
-    </ul>
-    </div>`
+          <div class="tab" id="places_tab">
+          <div class="content">
+          ${this.popupContent(feature, "place")}
+          </div>
+          </div>
+          <div class="tab" id="location_tab">
+          <div class="content">
+          ${this.popupContent(feature, "location")}
+          </div>
+          </div>
+          <ul class="tabs-link">
+          <li class="tab-link"> <a href="#places_tab"><span>Places</span></a></li>
+          <li class="tab-link"> <a href="#location_tab"><span>Location</span></a></li>
+          </ul>
+          </div>`
     );
   }
 
@@ -99,6 +100,7 @@ export class PlacesMap extends Component {
             />
           </MarkerClusterGroup>
         </Map>
+        <TimeSlider />
       </div>
     );
   }
