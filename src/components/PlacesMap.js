@@ -19,7 +19,7 @@ export class PlacesMap extends Component {
       center: [37.73, 14.2],
       zoom: 8,
       maxZoom: 18,
-      orthodoxCross: L.icon({
+      orthodoxCrossBlack: L.icon({
         iconUrl: "images/orthodox_cross_black.svg",
         iconSize: [38, 95]
       }),
@@ -29,6 +29,30 @@ export class PlacesMap extends Component {
       }),
       simpleCrossBlack: L.icon({
         iconUrl: "images/simple_cross_black.svg",
+        iconSize: [38, 95]
+      }),
+      simpleCrossGreen: L.icon({
+        iconUrl: "images/simple_cross_green.svg",
+        iconSize: [38, 95]
+      }),
+      simpleCrossPurple: L.icon({
+        iconUrl: "images/simple_cross_purple.svg",
+        iconSize: [38, 95]
+      }),
+      simpleCrossRed: L.icon({
+        iconUrl: "images/simple_cross_red.svg",
+        iconSize: [38, 95]
+      }),
+      simpleCrossYellow: L.icon({
+        iconUrl: "images/simple_cross_yellow.svg",
+        iconSize: [38, 95]
+      }),
+      cemeteryCrossBlack: L.icon({
+        iconUrl: "images/cemetery_cross_black.svg",
+        iconSize: [38, 95]
+      }),
+      cemeteryCrossRed: L.icon({
+        iconUrl: "images/cemetery_cross_red.svg",
         iconSize: [38, 95]
       })
     };
@@ -72,10 +96,20 @@ export class PlacesMap extends Component {
 
   pointToLayer(feature, latlng) {
     const orderType = {
-      Basilian: L.marker(latlng, { icon: this.state.orthodoxCross }),
+      Basilian: L.marker(latlng, { icon: this.state.orthodoxCrossBlack }),
       "Augustinian Canons": L.marker(latlng, {
         icon: this.state.simpleCrossBlue
-      })
+      }),
+      "Knights of the Hospital of Saint John of Jerusalem": L.marker(latlng, {
+        icon: this.state.simpleCrossGreen
+      }),
+      Benedictine: L.marker(latlng, { icon: this.state.simpleCrossPurple }),
+      Cistercian: L.marker(latlng, { icon: this.state.simpleCrossRed }),
+      "Premonstratensian Canons": L.marker(latlng, {
+        icon: this.state.simpleCrossYellow
+      }),
+      Cluniac: L.marker(latlng, { icon: this.state.cemeteryCrossBlack }),
+      "Knights Templar": L.marker(latlng, { icon: this.state.cemeteryCrossRed })
     };
     return (
       orderType[feature.properties.place.details.order] ||
