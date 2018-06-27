@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import { PlacesMap } from "../components/PlacesMap";
-import TimeSlider from "../components/TimeSlider";
 
 class NavBar extends Component {
   render() {
@@ -25,7 +24,6 @@ class NavBar extends Component {
           </TabPanel>
           <TabPanel>
             <h2>People</h2>
-            <TimeSlider />
           </TabPanel>
           <TabPanel>
             <h2>Home</h2>
