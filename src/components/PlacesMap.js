@@ -3,7 +3,6 @@ import { Map, TileLayer, GeoJSON } from "react-leaflet";
 import L from "leaflet";
 import { geojson } from "../data/places";
 import SearchBar from "./SearchBar";
-import TimeSlider from "./TimeSlider";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import "../containers/App.css";
 import "leaflet.markercluster/dist/MarkerCluster.css";
@@ -112,7 +111,6 @@ export class PlacesMap extends Component {
             />
           </MarkerClusterGroup>
         </Map>
-        <TimeSlider />
       </div>
     );
   }
