@@ -3,11 +3,11 @@ import { Map, TileLayer, GeoJSON } from "react-leaflet";
 import L from "leaflet";
 import { geojson } from "../data/places";
 import SearchBar from "./SearchBar";
+import TimeSlider from "./TimeSlider";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import "../containers/App.css";
 import "leaflet.markercluster/dist/MarkerCluster.css";
 import "leaflet.markercluster/dist/MarkerCluster.Default.css";
-import TimeSlider from "./TimeSlider";
 
 export class PlacesMap extends Component {
   constructor(props) {
@@ -18,43 +18,7 @@ export class PlacesMap extends Component {
     this.state = {
       center: [37.73, 14.2],
       zoom: 8,
-      maxZoom: 18,
-      orthodoxCrossBlack: L.icon({
-        iconUrl: "images/orthodox_cross_black.svg",
-        iconSize: [38, 95]
-      }),
-      simpleCrossBlue: L.icon({
-        iconUrl: "images/simple_cross_blue.svg",
-        iconSize: [38, 95]
-      }),
-      simpleCrossBlack: L.icon({
-        iconUrl: "images/simple_cross_black.svg",
-        iconSize: [38, 95]
-      }),
-      simpleCrossGreen: L.icon({
-        iconUrl: "images/simple_cross_green.svg",
-        iconSize: [38, 95]
-      }),
-      simpleCrossPurple: L.icon({
-        iconUrl: "images/simple_cross_purple.svg",
-        iconSize: [38, 95]
-      }),
-      simpleCrossRed: L.icon({
-        iconUrl: "images/simple_cross_red.svg",
-        iconSize: [38, 95]
-      }),
-      simpleCrossYellow: L.icon({
-        iconUrl: "images/simple_cross_yellow.svg",
-        iconSize: [38, 95]
-      }),
-      cemeteryCrossBlack: L.icon({
-        iconUrl: "images/cemetery_cross_black.svg",
-        iconSize: [38, 95]
-      }),
-      cemeteryCrossRed: L.icon({
-        iconUrl: "images/cemetery_cross_red.svg",
-        iconSize: [38, 95]
-      })
+      maxZoom: 18
     };
   }
 
@@ -74,16 +38,18 @@ export class PlacesMap extends Component {
   }
 
   onEachFeature(feature, layer) {
+    const location = this.popupContent(feature, "location");
+    const place = this.popupContent(feature, "place");
     layer.bindPopup(
       `<div class="tabs">
           <div class="tab" id="places_tab">
           <div class="content">
-          ${this.popupContent(feature, "place")}
+          ${place}
           </div>
           </div>
           <div class="tab" id="location_tab">
           <div class="content">
-          ${this.popupContent(feature, "location")}
+          ${location}
           </div>
           </div>
           <ul class="tabs-link">
@@ -94,26 +60,38 @@ export class PlacesMap extends Component {
     );
   }
 
+  icons(type, color) {
+    return L.icon({
+      iconUrl: `images/${type}_cross_${color}.svg`,
+      iconSize: [38, 95]
+    });
+  }
+
   pointToLayer(feature, latlng) {
+    const order = feature.properties.place.details.order;
     const orderType = {
-      Basilian: L.marker(latlng, { icon: this.state.orthodoxCrossBlack }),
+      Basilian: L.marker(latlng, {
+        icon: this.icons("orthodox", "black")
+      }),
       "Augustinian Canons": L.marker(latlng, {
-        icon: this.state.simpleCrossBlue
+        icon: this.icons("simple", "blue")
       }),
       "Knights of the Hospital of Saint John of Jerusalem": L.marker(latlng, {
-        icon: this.state.simpleCrossGreen
+        icon: this.icons("simple", "green")
       }),
-      Benedictine: L.marker(latlng, { icon: this.state.simpleCrossPurple }),
-      Cistercian: L.marker(latlng, { icon: this.state.simpleCrossRed }),
+      Benedictine: L.marker(latlng, { icon: this.icons("simple", "purple") }),
+      Cistercian: L.marker(latlng, { icon: this.icons("simple", "red") }),
       "Premonstratensian Canons": L.marker(latlng, {
-        icon: this.state.simpleCrossYellow
+        icon: this.icons("simple", "yellow")
       }),
-      Cluniac: L.marker(latlng, { icon: this.state.cemeteryCrossBlack }),
-      "Knights Templar": L.marker(latlng, { icon: this.state.cemeteryCrossRed })
+      Cluniac: L.marker(latlng, { icon: this.icons("cemetery", "black") }),
+      "Knights Templar": L.marker(latlng, {
+        icon: this.icons("cemetery", "red")
+      })
     };
     return (
-      orderType[feature.properties.place.details.order] ||
-      L.marker(latlng, { icon: this.state.simpleCrossBlack })
+      orderType[order] ||
+      L.marker(latlng, { icon: this.icons("simple", "black") })
     );
   }
 
