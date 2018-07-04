@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
-import { geojson } from "../data/places";
-
 const createSliderWithTooltip = Slider.createSliderWithTooltip;
 const Range = createSliderWithTooltip(Slider.Range);
 
@@ -34,23 +32,23 @@ export class TimeSlider extends Component {
     this.setState({ value: [lowerBound, upperBound] });
   };
 
-  compareDate = (value) => {
+  compareDate = value => {
     this.setState({
       value
     });
-    return geojson.features.map(feature => {
-      if (
-        feature.properties.place.details["earliest-attestation"] >=
-          this.state.lowerBound &&
-        feature.properties.place.details["earliest-attestation"] <=
-          this.state.upperBound
-      ) {
-        return console.log("Working");
-      } else {
-        return null;
-      }
-    });
-  }
+    // return geojson.features.map(feature => {
+    //   if (
+    //     feature.properties.place.details["earliest-attestation"] >=
+    //       this.state.lowerBound &&
+    //     feature.properties.place.details["earliest-attestation"] <=
+    //       this.state.upperBound
+    //   ) {
+    //     return console.log("Working");
+    //   } else {
+    //     return null;
+    //   }
+    // });
+  };
   // Add filter function to remove data that does not meet the criteria to be displayed.
 
   render() {
