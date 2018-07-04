@@ -31,8 +31,8 @@ export class PlacesMap extends Component {
     });
   }
 
-  popupContent(feature, info) {
-    const content = feature.properties[info];
+  popupContent({ properties: test }, info) {
+    const content = test[info];
     return content ? this.parseGeoJson(content) : null;
   }
 
@@ -66,8 +66,8 @@ export class PlacesMap extends Component {
     });
   }
 
-  pointToLayer(feature, latlng) {
-    const order = feature.properties.place.details.order;
+  //prettier-ignore
+  pointToLayer({ properties:{ place: { details: { order } } } }, latlng) {
     const orderType = {
       Basilian: L.marker(latlng, {
         icon: this.icons("orthodox", "black")
