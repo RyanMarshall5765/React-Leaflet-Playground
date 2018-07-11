@@ -23,10 +23,11 @@ export class PlacesMap extends Component {
 
   parseGeoJson(data) {
     return Object.entries(data).map(([key, value]) => {
-      if (value)
+      if (value) {
         return typeof value === "object"
           ? this.parseGeoJson(value)
           : `${key} : ${value} <br>`;
+      }
       return `${key} is empty <br>`;
     });
   }
@@ -67,7 +68,7 @@ export class PlacesMap extends Component {
   }
 
   //prettier-ignore
-  pointToLayer({ properties:{ place: { details: { order } } } }, latlng) {
+  pointToLayer({ properties: { place: { details: { order } } } }, latlng) {
     const orderType = {
       Basilian: L.marker(latlng, {
         icon: this.icons("orthodox", "black")
