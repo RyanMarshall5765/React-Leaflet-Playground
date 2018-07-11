@@ -49,7 +49,11 @@ export class TimeSlider extends Component {
     //   }
     // });
   };
-  // Add filter function to remove data that does not meet the criteria to be displayed.
+  // Thought process: Map over the GeoJSON to see the earliest attestation
+  // Compare all of these dates to the upperbound and lowerbound values of the time slider
+  // Return the GeoJSON points that match this criteria
+  // Filter function to remove data that does not meet the criteria to be displayed?
+  // Where do I return this GeoJSON?
 
   render() {
     return (
