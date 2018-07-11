@@ -20,30 +20,9 @@ class NavBar extends Component {
             <Tab>About</Tab>
           </TabList>
           <TabPanel>
-            <h2>Places</h2>
             <PlacesMap />
+            <hr />
             <TimeSlider />
-          </TabPanel>
-          <TabPanel>
-            <h2>People</h2>
-          </TabPanel>
-          <TabPanel>
-            <h2>Home</h2>
-          </TabPanel>
-          <TabPanel>
-            <h2>Chattels</h2>
-          </TabPanel>
-          <TabPanel>
-            <h2>Essays</h2>
-          </TabPanel>
-          <TabPanel>
-            <h2>Analytics</h2>
-          </TabPanel>
-          <TabPanel>
-            <h2>Resources</h2>
-          </TabPanel>
-          <TabPanel>
-            <h2>About</h2>
           </TabPanel>
         </Tabs>
       </div>
