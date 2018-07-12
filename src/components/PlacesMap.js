@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import { Map, TileLayer, GeoJSON } from "react-leaflet";
 import L from "leaflet";
+import MarkerClusterGroup from "react-leaflet-markercluster";
 import { geojson } from "../data/places";
 import SearchBar from "./SearchBar";
-import MarkerClusterGroup from "react-leaflet-markercluster";
 import "../containers/App.css";
 import "leaflet.markercluster/dist/MarkerCluster.css";
 import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 
-export class PlacesMap extends Component {
+class PlacesMap extends Component {
   constructor(props) {
     super(props);
     this.onEachFeature = this.onEachFeature.bind(this);
@@ -32,8 +32,8 @@ export class PlacesMap extends Component {
     });
   }
 
-  popupContent({ properties: test }, info) {
-    const content = test[info];
+  popupContent({ properties }, info) {
+    const content = properties[info];
     return content ? this.parseGeoJson(content) : null;
   }
 
@@ -116,3 +116,5 @@ export class PlacesMap extends Component {
     );
   }
 }
+
+export default PlacesMap;

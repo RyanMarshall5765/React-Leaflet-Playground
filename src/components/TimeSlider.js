@@ -4,7 +4,7 @@ import "rc-slider/assets/index.css";
 const createSliderWithTooltip = Slider.createSliderWithTooltip;
 const Range = createSliderWithTooltip(Slider.Range);
 
-export class TimeSlider extends Component {
+class TimeSlider extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -87,3 +87,5 @@ export class TimeSlider extends Component {
     );
   }
 }
+
+export default TimeSlider;
