@@ -1,6 +1,6 @@
 import { geojson } from "../data/places";
 
-class Provider {
+class SearchProvider {
   async search({ query }) {
     return geojson.features
       .filter(
@@ -17,4 +17,4 @@ class Provider {
   }
 }
 
-export default Provider;
+export default SearchProvider;

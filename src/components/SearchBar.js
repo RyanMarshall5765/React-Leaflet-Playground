@@ -1,12 +1,12 @@
 import { GeoSearchControl } from "leaflet-geosearch";
 import { MapControl } from "react-leaflet";
-import Provider from "../containers/Provider";
+import SearchProvider from "../containers/SearchProvider";
 import "leaflet-geosearch/assets/css/leaflet.css";
 
 class SearchBar extends MapControl {
   createLeafletElement() {
     return GeoSearchControl({
-      provider: new Provider(),
+      provider: new SearchProvider(),
       autoClose: true,
       searchLabel: "search"
     });
