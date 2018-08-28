@@ -9,7 +9,20 @@ class App extends Component {
       <div>
         <header>
           <Link to="/">Home</Link>
-          <Link to="/Places">Places</Link>
+          <br />
+          <Link to="/people">People</Link>
+          <br />
+          <Link to="/places">Places</Link>
+          <br />
+          <Link to="/chattels">Chattels</Link>
+          <br />
+          <Link to="/essays">Essays</Link>
+          <br />
+          <Link to="/analytics">Analytics</Link>
+          <br />
+          <Link to="/resources">Resources</Link>
+          <br />
+          <Link to="/about">About</Link>
         </header>
         <main>
           <Route exact path="/" component={Home} />
