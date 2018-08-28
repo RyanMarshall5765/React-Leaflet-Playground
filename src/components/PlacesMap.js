@@ -3,6 +3,7 @@ import { Map, TileLayer, GeoJSON } from "react-leaflet";
 import L from "leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import { geojson } from "../data/places";
+import { flatGeojson } from "../data/placesFlat";
 import SearchBar from "./SearchBar";
 import "../containers/App.css";
 import "leaflet.markercluster/dist/MarkerCluster.css";
@@ -32,30 +33,23 @@ class PlacesMap extends Component {
     });
   }
 
-  popupContent({ properties }, info) {
-    const content = properties[info];
+  popupContent({ properties }) {
+    const content = properties;
     return content ? this.parseGeoJson(content) : null;
   }
 
   onEachFeature(feature, layer) {
-    const location = this.popupContent(feature, "location");
-    const place = this.popupContent(feature, "place");
     layer.bindPopup(
       `<div class="tabs">
           <div class="tab" id="places_tab">
           <div class="content">
-          ${place}
+          ${this.popupContent(feature)}
           </div>
           </div>
           <div class="tab" id="location_tab">
           <div class="content">
-          ${location}
           </div>
           </div>
-          <ul class="tabs-link">
-          <li class="tab-link"> <a href="#places_tab"><span>Places</span></a></li>
-          <li class="tab-link"> <a href="#location_tab"><span>Location</span></a></li>
-          </ul>
           </div>`
     );
   }
@@ -68,7 +62,7 @@ class PlacesMap extends Component {
   }
 
   //prettier-ignore
-  pointToLayer({ properties: { place: { details: { order } } } }, latlng) {
+  pointToLayer({ properties: { order } } , latlng) {
     const orderType = {
       Basilian: L.marker(latlng, {
         icon: this.icons("orthodox", "black")
@@ -106,7 +100,7 @@ class PlacesMap extends Component {
           <SearchBar />
           <MarkerClusterGroup>
             <GeoJSON
-              data={geojson}
+              data={flatGeojson}
               onEachFeature={this.onEachFeature}
               pointToLayer={this.pointToLayer}
             />
