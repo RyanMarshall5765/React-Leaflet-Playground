@@ -1,3 +1,5 @@
+## Learning Project for React-Leaflet
+
 ## Getting Started
 
 Once cloned you must run the following commands in the project directory:
